@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { Todo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export const TodoForm = ({ todo }: { todo: Todo | null }) => {
+export const TodoForm = ({ todo }: { todo: any }) => {
   const [Completed, setCompleted] = useState(todo?.completed || false);
   const router = useRouter();
 

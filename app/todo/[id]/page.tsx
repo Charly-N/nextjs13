@@ -8,14 +8,18 @@ const Todo: (props: any) => Promise<JSX.Element> = async (props: any) => {
   const todo: Todo | null = await prisma.todo.findUnique({
     where: { id: parseInt(props.params.id) },
   });
+  let formatted_todo: any = {};
   if (todo) {
-    todo.createdAt = getDate(todo.createdAt);
-    todo.updatedAt = getDate(todo.updatedAt);
+    formatted_todo = {
+      ...todo,
+      createdAt: getDate(todo.createdAt),
+      updatedAt: getDate(todo.updatedAt),
+    };
   }
 
   if (!todo) throw new Error("Todo not found");
 
-  return <TodoForm todo={todo} />;
+  return <TodoForm todo={formatted_todo} />;
 };
 
 export default Todo;
