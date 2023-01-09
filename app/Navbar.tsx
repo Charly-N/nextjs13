@@ -4,7 +4,7 @@ import Link from "next/link";
 const prisma = new PrismaClient();
 
 export const Navbar: () => Promise<JSX.Element> = async () => {
-  const todos: an[] = await prisma.todo.findMany();
+  const todos: any[] = await prisma.todo.findMany();
 
   return (
     <nav className="w-36 p-4 mr-8 flex h-full relative left-0 flex-col">
