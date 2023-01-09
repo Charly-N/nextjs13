@@ -47,7 +47,7 @@ export const TodoForm = ({
           <br />
           <span className="drop-shadow-w">{todo?.author.name}</span>
         </p>
-        <p>
+        {/* <p>
           <span className="text-sm font-extralight">created</span>
           <br />
           <span className="drop-shadow-w">{getDate(todo?.createdAt)}</span>
@@ -56,7 +56,7 @@ export const TodoForm = ({
           <span className="text-sm font-extralight">updated</span>
           <br />
           <span className="drop-shadow-w">{getDate(todo?.updatedAt)}</span>
-        </p>
+        </p> */}
       </div>
       <div className="mt-14 flex justify-between items-center">
         <label className="label cursor-pointer w-min flex items-start">
