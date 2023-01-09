@@ -5,11 +5,22 @@ import { Todo } from "@prisma/client";
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
-type Formatted_todo = Modify<Todo, { createdAt: string | undefined; updatedAt: string | undefined }>;
+type Formatted_todo = Modify<
+  Todo,
+  { createdAt: string | undefined; updatedAt: string | undefined }
+>;
 
 export const TodoForm = ({ todo }: { todo: Formatted_todo | null }) => {
   const [Completed, setCompleted] = useState(todo?.completed || false);
   const router = useRouter();
+
+  const onDelete = () => {
+    fetch(`/api/todo/${todo?.id}`, {
+      method: "DELETE",
+    })
+      .then((res) => console.log(res.json(),router.refresh(), router.push('/')))
+      .catch((err) => console.log(err));
+  };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -82,6 +93,11 @@ export const TodoForm = ({ todo }: { todo: Formatted_todo | null }) => {
         <button type="submit" className="btn btn-outline btn-info">
           Save
         </button>
+        {todo && (
+          <button onClick={onDelete} className="btn btn-outline btn-error">
+            Delete
+          </button>
+        )}
       </div>
     </form>
   );
