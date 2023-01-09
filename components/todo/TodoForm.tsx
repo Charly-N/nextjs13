@@ -1,6 +1,5 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Todo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
 export const TodoForm = ({ todo }: { todo: any }) => {

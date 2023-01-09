@@ -1,11 +1,11 @@
-import { PrismaClient, Todo } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { TodoForm } from "../../../components/todo/TodoForm";
 import { getDate } from "../../../utils/Date";
 
 const prisma = new PrismaClient();
 
 const Todo: (props: any) => Promise<JSX.Element> = async (props: any) => {
-  const todo: Todo | null = await prisma.todo.findUnique({
+  const todo: any = await prisma.todo.findUnique({
     where: { id: parseInt(props.params.id) },
   });
   let formatted_todo: any = {};
