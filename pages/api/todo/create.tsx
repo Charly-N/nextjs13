@@ -16,15 +16,12 @@ export default function handler(
 ) {
   const body = JSON.parse(req.body);
 
-  if (req.method === "PATCH") {
+  if (req.method === "POST") {
     prisma.todo
-      .update({
-        where: { id: parseInt(req.query.id as string) },
+      .create({
         data: body,
       })
       .then((todo) => {
-        console.log(todo);
-
         res.status(200).json({ todo: todo });
       });
   }

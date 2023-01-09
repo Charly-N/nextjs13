@@ -1,14 +1,9 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { Todo, User } from "@prisma/client";
-import { getDate, getTime } from "../../utils/Date";
+import { Todo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
-export const TodoForm = ({
-  todo,
-}: {
-  todo: (Todo & { author: User }) | null;
-}) => {
+export const TodoForm = ({ todo }: { todo: Todo | null }) => {
   const [Completed, setCompleted] = useState(todo?.completed || false);
   const router = useRouter();
 
@@ -18,7 +13,10 @@ export const TodoForm = ({
     const entries = Object.fromEntries(fd.entries()) as any;
     entries["completed"] = Completed ? true : false;
 
-    fetch(`/api/todo/${todo?.id}`, {
+    let url = todo ? "/api/todo/" + todo.id : "/api/todo/create";
+    console.log(url);
+
+    fetch(url, {
       method: todo ? "PATCH" : "POST",
       body: JSON.stringify(entries),
     })
@@ -42,21 +40,21 @@ export const TodoForm = ({
         className="mb-8 textarea textarea-ghost h-48 w-full drop-shadow-w"
       />
       <div className="flex justify-between pl-2 pr-4 pt-2">
-        <p>
+        {/* <p>
           <span className="text-sm font-extralight">author</span>
           <br />
           <span className="drop-shadow-w">{todo?.author.name}</span>
-        </p>
-        {/* <p>
+        </p> */}
+        <p>
           <span className="text-sm font-extralight">created</span>
           <br />
-          <span className="drop-shadow-w">{getDate(todo?.createdAt)}</span>
+          <span className="drop-shadow-w">{todo?.createdAt}</span>
         </p>
         <p>
           <span className="text-sm font-extralight">updated</span>
           <br />
-          <span className="drop-shadow-w">{getDate(todo?.updatedAt)}</span>
-        </p> */}
+          <span className="drop-shadow-w">{todo?.updatedAt}</span>
+        </p>
       </div>
       <div className="mt-14 flex justify-between items-center">
         <label className="label cursor-pointer w-min flex items-start">
