@@ -7,7 +7,7 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 
 type Formatted_todo = Modify<Todo, { createdAt: string | undefined; updatedAt: string | undefined }>;
 
-export const TodoForm = ({ todo }: { todo: Formatted_todo }) => {
+export const TodoForm = ({ todo }: { todo: Formatted_todo | null }) => {
   const [Completed, setCompleted] = useState(todo?.completed || false);
   const router = useRouter();
 
