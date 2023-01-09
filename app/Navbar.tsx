@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Todo } from "@prisma/client";
 import Link from "next/link";
 
 const prisma = new PrismaClient();
 
 export const Navbar: () => Promise<JSX.Element> = async () => {
-  const todos: any[] = await prisma.todo.findMany();
+  const todos: Todo[] = await prisma.todo.findMany();
 
   return (
     <nav className="w-36 p-4 mr-8 flex h-full relative left-0 flex-col">
@@ -12,7 +12,7 @@ export const Navbar: () => Promise<JSX.Element> = async () => {
         New
       </Link>
       <ul className="text-sm font-bold text-pink-300">
-        {todos.map((todo: any) => (
+        {todos.map((todo: Todo) => (
           <li key={todo.id} className="cursor-pointer py-2 hover:drop-shadow-w">
             <Link href={`/todo/${todo.id}`}>
               <span>{todo.title}</span>

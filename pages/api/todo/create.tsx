@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Todo } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { resolve } from "path";
 
 const prisma = new PrismaClient();
 
 type Data = {
-  todo?: any;
+  todo?: Todo;
   error?: string;
 };
 
@@ -21,7 +21,7 @@ export default function handler(
       .create({
         data: body,
       })
-      .then((todo) => {
+      .then((todo: Todo) => {
         res.status(200).json({ todo: todo });
       });
   }
