@@ -3,7 +3,11 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Todo } from "@prisma/client";
 
-export const TodoForm = ({ todo }: { todo: Todo }) => {
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+type Formatted_todo = Modify<Todo, { createdAt: string | undefined; updatedAt: string | undefined }>;
+
+export const TodoForm = ({ todo }: { todo: Formatted_todo }) => {
   const [Completed, setCompleted] = useState(todo?.completed || false);
   const router = useRouter();
 

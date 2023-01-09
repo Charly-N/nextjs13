@@ -5,27 +5,27 @@ import { getDate } from "../../../utils/Date";
 
 const prisma = new PrismaClient();
 
-interface Formatted_todo extends Todo {
-  createdAt: string;
-  updatedAt: string;
-}
+type Modify<T, R> = Omit<T, keyof R> & R;
 
-const Todo: (props: Todo) => Promise<> = async (props: Todo) => {
-  const todo: Todo = await prisma.todo.findUnique({
+type Formatted_todo = Modify<
+  Todo,
+  { createdAt: string | undefined; updatedAt: string | undefined }
+>;
+
+const Todo = async (props: any) => {
+  const todo: Todo | null = await prisma.todo.findUnique({
     where: { id: parseInt(props.params.id) },
   });
-  let formatted_todo: Formatted_todo | {} = {};
   if (todo) {
-    formatted_todo = {
+    const formatted_todo: Formatted_todo = {
       ...todo,
       createdAt: getDate(todo.createdAt),
       updatedAt: getDate(todo.updatedAt),
     };
+    return <TodoForm todo={formatted_todo} />;
   }
 
   if (!todo) throw new Error("Todo not found");
-
-  return <TodoForm todo={formatted_todo} />;
 };
 
 export default Todo;
